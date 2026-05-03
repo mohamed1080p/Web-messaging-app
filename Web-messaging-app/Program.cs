@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Web_messaging_app.Infrastructure.Persistence;
+
 namespace Web_messaging_app
 {
     public class Program
@@ -7,14 +10,16 @@ namespace Web_messaging_app
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddAuthorization();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
