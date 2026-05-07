@@ -4,6 +4,7 @@ namespace Web_messaging_app.Domain.Models.UserModule;
 public class RefreshToken
 {
     public Guid Id { get; set; }
+    public Guid UserId { get; set; }
     public string Token { get; set; } = string.Empty;
     public string? ReplacedByToken { get; set; }
     public DateTime? RevokedAt { get; set; }
@@ -14,6 +15,6 @@ public class RefreshToken
 
     ///////////////////////////////////////////////////
     public User User { get; set; } = null!;
-    public Guid UserId { get; set; }
+   
 
 }

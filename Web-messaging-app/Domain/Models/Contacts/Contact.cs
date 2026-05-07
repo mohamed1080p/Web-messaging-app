@@ -1,4 +1,6 @@
-﻿namespace Web_messaging_app.Domain.Models.UserModule;
+﻿using Web_messaging_app.Domain.Models.UserModule;
+
+namespace Web_messaging_app.Domain.Models.Contacts;
 public class Contact
 {
     public Guid Id { get; set; }

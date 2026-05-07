@@ -1,4 +1,6 @@
-﻿namespace Web_messaging_app.Domain.Models.UserModule;
+﻿using Web_messaging_app.Domain.Models.Contacts;
+using Web_messaging_app.Domain.Models.Conversations;
+namespace Web_messaging_app.Domain.Models.UserModule;
 public class User
 {
     public Guid Id { get; set; }
@@ -14,5 +16,7 @@ public class User
     /////////////////////////////////////////////////////////////////
     public ICollection<RefreshToken> RefreshTokens { get; set; } = [];
     public ICollection<Contact> Contacts { get; set; } = [];
+    public ICollection<UserBlock> BlockedUsers { get; set; } = [];
+    public ICollection<ConversationParticipant> ConversationParticipants { get; set; } = [];
 
 }

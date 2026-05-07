@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Web_messaging_app.Domain.Models.UserModule;
+using Web_messaging_app.Domain.Models.Contacts;
 
 namespace Web_messaging_app.Infrastructure.Persistence.Configurations;
 
