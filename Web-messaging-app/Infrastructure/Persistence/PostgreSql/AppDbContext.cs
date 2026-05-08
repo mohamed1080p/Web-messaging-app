@@ -4,7 +4,7 @@ using Web_messaging_app.Domain.Models.Conversations;
 using Web_messaging_app.Domain.Models.Media;
 using Web_messaging_app.Domain.Models.UserModule;
 
-namespace Web_messaging_app.Infrastructure.Persistence;
+namespace Web_messaging_app.Infrastructure.Persistence.PostgreSql;
 public class AppDbContext:DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options):base(options)

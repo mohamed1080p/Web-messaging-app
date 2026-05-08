@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Web_messaging_app.Domain.Models.UserModule;
 
-namespace Web_messaging_app.Infrastructure.Persistence.Configurations;
+namespace Web_messaging_app.Infrastructure.Persistence.PostgreSql.Configurations;
 
 public class RefreshTokenConfigurations : IEntityTypeConfiguration<RefreshToken>
 {

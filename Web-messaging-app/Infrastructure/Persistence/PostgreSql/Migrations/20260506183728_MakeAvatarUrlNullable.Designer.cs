@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Web_messaging_app.Infrastructure.Persistence;
+using Web_messaging_app.Infrastructure.Persistence.PostgreSql;
 
 #nullable disable
 

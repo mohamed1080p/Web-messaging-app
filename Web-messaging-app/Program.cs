@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using Web_messaging_app.Infrastructure.Persistence;
+using Web_messaging_app.Infrastructure.Persistence.PostgreSql;
 
 namespace Web_messaging_app
 {

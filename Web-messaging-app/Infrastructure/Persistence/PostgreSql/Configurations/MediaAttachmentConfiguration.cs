@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Web_messaging_app.Domain.Models.Media;
 
-namespace Web_messaging_app.Infrastructure.Persistence.Configurations;
+namespace Web_messaging_app.Infrastructure.Persistence.PostgreSql.Configurations;
 public class MediaAttachmentConfiguration : IEntityTypeConfiguration<MediaAttachment>
 {
     public void Configure(EntityTypeBuilder<MediaAttachment> builder)
