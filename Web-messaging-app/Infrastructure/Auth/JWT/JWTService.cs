@@ -7,7 +7,13 @@ using Web_messaging_app.Domain.Models.UserModule;
 
 namespace Web_messaging_app.Infrastructure.Auth.JWT;
 
-public class JwtService(IConfiguration _configuration)
+public interface IJwtService
+{
+    string GenerateAccessToken(User user);
+    RefreshToken GenerateRefreshToken(Guid userId);
+}
+
+public class JwtService(IConfiguration _configuration) : IJwtService
 {
     public string GenerateAccessToken(User user)
     {
