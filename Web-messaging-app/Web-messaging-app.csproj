@@ -11,6 +11,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
+		<PackageReference Include="FluentValidation" Version="12.1.1" />
+		<PackageReference Include="MediatR" Version="14.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
@@ -22,6 +25,13 @@
 		<PackageReference Include="Snappier" Version="1.1.6" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Featuers\Auth\Login\" />
+	  <Folder Include="Featuers\Auth\Logout\" />
+	  <Folder Include="Featuers\Auth\RefreshToken\" />
 	</ItemGroup>
 
 </Project>
