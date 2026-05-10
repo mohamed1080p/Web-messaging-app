@@ -11,11 +11,12 @@ public class RegisterCommandHandler(AppDbContext _dbContext, IJwtService _jwtSer
 {
     public async Task<RegisterResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        //var EmailExists = await _dbContext.Users.AnyAsync(a => a.Email == request.Email, cancellationToken);
-        //if (EmailExists)
-        //{
-        //    throw new Exception("Email already exists");
-        //}
+        var EmailExists = await _dbContext.Users.AnyAsync(a => a.Email == request.Email, cancellationToken);
+        var PhoneNumberExists = await _dbContext.Users.AnyAsync(a => a.PhoneNumber == request.PhoneNumber, cancellationToken);
+        if (EmailExists || PhoneNumberExists)
+        {
+            throw new Exception("Email or PhoneNumber already exists");
+        }
 
         var PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
@@ -25,7 +26,8 @@ public class RegisterCommandHandler(AppDbContext _dbContext, IJwtService _jwtSer
             Email = request.Email,
             PasswordHash = PasswordHash,
             UserName = request.Username,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            PhoneNumber=request.PhoneNumber
         };
 
         var AccessToken = _jwtService.GenerateAccessToken(user);
