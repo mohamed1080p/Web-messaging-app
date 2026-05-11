@@ -9,6 +9,7 @@ using Web_messaging_app.Featuers.Auth.Logout;
 using Web_messaging_app.Featuers.Auth.RefreshToken;
 using Web_messaging_app.Featuers.Auth.Register;
 using Web_messaging_app.Featuers.Contacts.AddContact;
+using Web_messaging_app.Featuers.Contacts.RemoveContact;
 using Web_messaging_app.Infrastructure.Auth.JWT;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
 using Web_messaging_app.Infrastructure.Persistence.PostgreSql;
@@ -76,6 +77,7 @@ public class Program
         app.MapLogoutEndpoint();
         app.MapRefreshTokenEndpoint();
         app.MapAddContactEndpoint();
+        app.MapRemoveContactEndpoint();
 
         app.Run();
     }
