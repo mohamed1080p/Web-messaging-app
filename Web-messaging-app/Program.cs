@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System.Text;
 using Web_messaging_app.Featuers.Auth.Login;
+using Web_messaging_app.Featuers.Auth.Logout;
 using Web_messaging_app.Featuers.Auth.Register;
 using Web_messaging_app.Infrastructure.Auth.JWT;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
@@ -70,6 +71,7 @@ public class Program
 
         app.MapRegisterEndpoint();
         app.MapLoginEndpoint();
+        app.MapLogoutEndpoint();
 
         app.Run();
     }
