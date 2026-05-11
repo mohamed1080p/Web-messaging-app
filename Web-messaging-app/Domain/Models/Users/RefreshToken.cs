@@ -6,10 +6,9 @@ public class RefreshToken
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public string Token { get; set; } = string.Empty;
-    public string? ReplacedByToken { get; set; }
-    public DateTime? RevokedAt { get; set; }
+
     [NotMapped]
-    public bool IsActive => RevokedAt == null && DateTime.UtcNow < ExpiresAt;
+    public bool IsActive => DateTime.UtcNow < ExpiresAt;
     public DateTime ExpiresAt { get; set; }
     public DateTime CreatedAt { get; set; }
 

@@ -19,9 +19,9 @@ public class RefreshTokenConfigurations : IEntityTypeConfiguration<RefreshToken>
             .HasMaxLength(512)
             .IsRequired();
 
-        builder.Property(a => a.ReplacedByToken)
-            .HasMaxLength(512)
-            .IsRequired(false);
+        builder.HasIndex(a => a.Token).
+            IsUnique();
+
 
         builder.Ignore(a => a.IsActive);
 
@@ -32,8 +32,6 @@ public class RefreshTokenConfigurations : IEntityTypeConfiguration<RefreshToken>
             .IsRequired()
             .HasDefaultValueSql("now()");
 
-        builder.Property(r => r.RevokedAt)
-            .IsRequired(false);
 
         builder.HasIndex(r => r.Token)
             .IsUnique();

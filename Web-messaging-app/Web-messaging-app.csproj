@@ -29,7 +29,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Featuers\Auth\Logout\" />
 	  <Folder Include="Featuers\Auth\RefreshToken\" />
 	</ItemGroup>
 
