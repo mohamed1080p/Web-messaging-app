@@ -19,16 +19,19 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
             .HasMaxLength(50)
             .IsRequired();
 
+        builder.HasIndex(a => a.UserName).
+            IsUnique();
+
+        builder.Property(a => a.DisplayName)
+            .HasMaxLength(50)
+            .IsRequired();
+
         builder.Property(a => a.Email)
             .HasMaxLength(50)
             .IsRequired();
 
         builder.Property(a => a.Bio)
             .HasMaxLength(100);
-
-        builder.Property(a => a.PhoneNumber)
-            .HasMaxLength(20)
-            .IsRequired();
 
         builder.Property(u => u.PasswordHash)
             .IsRequired()

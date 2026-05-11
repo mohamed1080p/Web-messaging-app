@@ -31,4 +31,11 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Featuers\Contacts\GetContacts\" />
+	  <Folder Include="Featuers\Contacts\AddContact\" />
+	  <Folder Include="Featuers\Contacts\BlockContact\" />
+	  <Folder Include="Featuers\Contacts\RemoveContact\" />
+	</ItemGroup>
+
 </Project>
