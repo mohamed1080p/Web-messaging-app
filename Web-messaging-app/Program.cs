@@ -8,6 +8,10 @@ using Web_messaging_app.Featuers.Auth.Login;
 using Web_messaging_app.Featuers.Auth.Logout;
 using Web_messaging_app.Featuers.Auth.RefreshToken;
 using Web_messaging_app.Featuers.Auth.Register;
+using Web_messaging_app.Featuers.Contacts.AddContact;
+using Web_messaging_app.Featuers.Contacts.BlockContact;
+using Web_messaging_app.Featuers.Contacts.GetContacts;
+using Web_messaging_app.Featuers.Contacts.RemoveContact;
 using Web_messaging_app.Infrastructure.Auth.JWT;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
 using Web_messaging_app.Infrastructure.Persistence.PostgreSql;
@@ -49,7 +53,7 @@ public class Program
                         Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!))
                 };
             });
-
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddAuthorization();
 
         var app = builder.Build();
@@ -74,6 +78,10 @@ public class Program
         app.MapLoginEndpoint();
         app.MapLogoutEndpoint();
         app.MapRefreshTokenEndpoint();
+        app.MapAddContactEndpoint();
+        app.MapRemoveContactEndpoint();
+        app.MapGetContactsEndpoint();
+        app.MapBlockUserEndpoint();
 
         app.Run();
     }
