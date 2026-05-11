@@ -16,7 +16,7 @@ public class ContactConfigurations : IEntityTypeConfiguration<Contact>
 
         builder.Property(a => a.Name)
             .HasMaxLength(50)
-            .IsRequired(false);
+            .IsRequired();
 
         builder.Property(a => a.IsMuted)
             .IsRequired()
