@@ -17,7 +17,7 @@ public class RegisterCommandHandler(AppDbContext _dbContext, IJwtService _jwtSer
             throw new Exception("Email already exists");
         }
         var UsernameExists = await _dbContext.Users.AnyAsync(a => a.UserName == request.Username);
-        if(UsernameExists)
+        if (UsernameExists)
         {
             throw new Exception("Username already exists");
         }

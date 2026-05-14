@@ -31,4 +31,10 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Featuers\Conversations\CreateGroupConversation\" />
+	  <Folder Include="Featuers\Conversations\GetConversations\" />
+	  <Folder Include="Featuers\Conversations\GetConversationDetails\" />
+	</ItemGroup>
+
 </Project>
