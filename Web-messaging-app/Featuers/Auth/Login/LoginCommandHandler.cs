@@ -19,13 +19,9 @@ public class LoginCommandHandler(AppDbContext _dbContext, IJwtService _jwtServic
             throw new UnauthorizedAccessException("Invalid Email or Password");
         }
 
-        var expiredTokens = await _dbContext.RefreshTokens.Where(a => a.UserId == user.Id && DateTime.UtcNow > a.ExpiresAt)
-            .ToListAsync(cancellationToken);
-
-        if(expiredTokens.Any())
-        {
-            _dbContext.RefreshTokens.RemoveRange(expiredTokens);
-        }
+        await _dbContext.RefreshTokens
+            .Where(a => a.UserId == user.Id && DateTime.UtcNow > a.ExpiresAt)
+            .ExecuteDeleteAsync(cancellationToken);
 
         var refreshToken = _jwtService.GenerateRefreshToken(user.Id);
         var accessToken = _jwtService.GenerateAccessToken(user);
