@@ -12,6 +12,7 @@ using Web_messaging_app.Featuers.Contacts.BlockContact;
 using Web_messaging_app.Featuers.Contacts.GetContacts;
 using Web_messaging_app.Featuers.Contacts.RemoveContact;
 using Web_messaging_app.Featuers.Conversations.CreateGroupConversation;
+using Web_messaging_app.Featuers.Conversations.GetConversationDetails;
 using Web_messaging_app.Featuers.Conversations.GetConversations;
 using Web_messaging_app.Featuers.Conversations.GetOrCreateDirectConversation;
 using Web_messaging_app.Infrastructure.Auth.JWT;
@@ -88,6 +89,7 @@ public class Program
         app.MapGetOrCreateDirectConversationEndpoint();
         app.MapCreateGroupConversationEndpoint();
         app.MapGetConversationsEndpoint();
+        app.MapGetConversationDetailsEndpoint();
 
         app.Run();
     }
