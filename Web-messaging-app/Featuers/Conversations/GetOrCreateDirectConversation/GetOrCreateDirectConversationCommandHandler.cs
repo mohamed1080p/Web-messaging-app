@@ -8,9 +8,9 @@ namespace Web_messaging_app.Featuers.Conversations.GetOrCreateDirectConversation
 
 public class GetOrCreateDirectConversationCommandHandler(AppDbContext _dbContext, IHttpContextAccessor _httpContextAccessor) :
     IRequestHandler<GetOrCreateDirectConversationCommand
-    , GetOrCreateDirectConversationResponse>
+    , ConversationResponse>
 {
-    public async Task<GetOrCreateDirectConversationResponse> Handle(GetOrCreateDirectConversationCommand request, CancellationToken ct)
+    public async Task<ConversationResponse> Handle(GetOrCreateDirectConversationCommand request, CancellationToken ct)
     {
         var ownerId = Guid.Parse(_httpContextAccessor.HttpContext!.
             User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -23,7 +23,7 @@ public class GetOrCreateDirectConversationCommandHandler(AppDbContext _dbContext
 
         if (conversation is not null)
         {
-            return new GetOrCreateDirectConversationResponse(
+            return new ConversationResponse(
                 conversation.Id,
                 conversation.Type,
                 conversation.Title,
@@ -78,7 +78,7 @@ public class GetOrCreateDirectConversationCommandHandler(AppDbContext _dbContext
         _dbContext.conversationParticipants.AddRange(participants);
         await _dbContext.SaveChangesAsync(ct);
 
-        return new GetOrCreateDirectConversationResponse(
+        return new ConversationResponse(
             NewConversation.Id,
             NewConversation.Type,
             NewConversation.Title,

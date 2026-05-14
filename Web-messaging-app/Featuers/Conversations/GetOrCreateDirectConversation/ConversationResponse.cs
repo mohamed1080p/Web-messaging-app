@@ -2,7 +2,7 @@
 
 namespace Web_messaging_app.Featuers.Conversations.GetOrCreateDirectConversation;
 
-public record GetOrCreateDirectConversationResponse(
+public record ConversationResponse(
     Guid ConversationId,
     ConversationType Type,
     string? Title,

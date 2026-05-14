@@ -17,7 +17,7 @@ public static class GetOrCreateDirectConversationEndpoint
         })
         .WithName("GetOrCreateDirectConversation")
         .WithTags("Conversations")
-        .Produces<GetOrCreateDirectConversationResponse>(StatusCodes.Status200OK)
+        .Produces<ConversationResponse>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status401Unauthorized)
         .RequireAuthorization();
     }
