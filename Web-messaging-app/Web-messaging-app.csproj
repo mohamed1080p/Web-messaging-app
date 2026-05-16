@@ -34,7 +34,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Featuers\Messaging\DeleteMessage\" />
-	  <Folder Include="Featuers\Messaging\GetMessages\" />
 	</ItemGroup>
 
 </Project>

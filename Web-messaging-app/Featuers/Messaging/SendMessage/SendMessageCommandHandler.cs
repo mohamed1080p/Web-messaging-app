@@ -19,7 +19,7 @@ public class SendMessageCommandHandler
                 .FindFirstValue(ClaimTypes.NameIdentifier)!);
 
         var isParticipant = await _dbContext.conversationParticipants.
-            AnyAsync(a => a.ConversationId == request.ConversationId && a.UserId == senderId);
+            AnyAsync(a => a.ConversationId == request.ConversationId && a.UserId == senderId, ct);
         if (!isParticipant)
         {
             throw new Exception("Conversation not found or access denied.");
@@ -30,8 +30,9 @@ public class SendMessageCommandHandler
             Id = Ulid.NewUlid().ToString(),
             ConversationId = request.ConversationId,
             SenderId = senderId,
+            Text = request.Text,
             Type = MessageType.Text,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
         };
 
         await _mongoDbContext.Messages.InsertOneAsync(message, cancellationToken: ct);
