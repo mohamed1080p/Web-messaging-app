@@ -8,7 +8,7 @@ public static class MongoDbIndexInitializer
     {
         var indexKeysDefinition = Builders<Message>.IndexKeys
             .Ascending(m => m.ConversationId)
-            .Descending(m => m.Sequence);
+            .Descending(m => m.CreatedAt);
 
         await context.Messages.Indexes.CreateOneAsync(
             new CreateIndexModel<Message>(indexKeysDefinition));
