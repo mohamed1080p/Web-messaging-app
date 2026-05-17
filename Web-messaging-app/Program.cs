@@ -15,6 +15,9 @@ using Web_messaging_app.Featuers.Conversations.CreateGroupConversation;
 using Web_messaging_app.Featuers.Conversations.GetConversationDetails;
 using Web_messaging_app.Featuers.Conversations.GetConversations;
 using Web_messaging_app.Featuers.Conversations.GetOrCreateDirectConversation;
+using Web_messaging_app.Featuers.Messaging.DeleteMessage;
+using Web_messaging_app.Featuers.Messaging.GetMessages;
+using Web_messaging_app.Featuers.Messaging.SendMessage;
 using Web_messaging_app.Infrastructure.Auth.JWT;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
 using Web_messaging_app.Infrastructure.Persistence.PostgreSql;
@@ -90,6 +93,9 @@ public class Program
         app.MapCreateGroupConversationEndpoint();
         app.MapGetConversationsEndpoint();
         app.MapGetConversationDetailsEndpoint();
+        app.MapSendMessageEndpoint();
+        app.MapGetMessagesEndpoint();
+        app.MapDeleteMessageEndpoint();
 
         app.Run();
     }
