@@ -17,6 +17,8 @@ using Web_messaging_app.Featuers.Conversations.GetConversations;
 using Web_messaging_app.Featuers.Conversations.GetOrCreateDirectConversation;
 using Web_messaging_app.Featuers.Messaging.DeleteMessage;
 using Web_messaging_app.Featuers.Messaging.GetMessages;
+using Web_messaging_app.Featuers.Messaging.Hubs;
+using Web_messaging_app.Featuers.Messaging.Notifications;
 using Web_messaging_app.Featuers.Messaging.SendMessage;
 using Web_messaging_app.Infrastructure.Auth.JWT;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
@@ -62,6 +64,19 @@ public class Program
             });
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddAuthorization();
+        builder.Services.AddSignalR();
+        builder.Services.AddScoped<INotificationService, NotificationService>();
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:4200", "null") // "null" allows local HTML files
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials(); // Required for SignalR
+            });
+        });
 
         var app = builder.Build();
 
@@ -77,6 +92,10 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseCors("AllowAll");
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.MapHub<ChatHub>("/hubs/chat");
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
