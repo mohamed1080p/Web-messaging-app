@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using StackExchange.Redis;
 using System.Text;
 using Web_messaging_app.Featuers.Auth.Login;
 using Web_messaging_app.Featuers.Auth.Logout;
@@ -23,6 +24,9 @@ using Web_messaging_app.Featuers.Messaging.SendMessage;
 using Web_messaging_app.Infrastructure.Auth.JWT;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
 using Web_messaging_app.Infrastructure.Persistence.PostgreSql;
+using Web_messaging_app.Infrastructure.Redis.MessageCache;
+using Web_messaging_app.Infrastructure.Redis.Presence;
+using Web_messaging_app.Infrastructure.Redis.TypingIndicator;
 
 namespace Web_messaging_app;
 
@@ -66,6 +70,11 @@ public class Program
         builder.Services.AddAuthorization();
         builder.Services.AddSignalR();
         builder.Services.AddScoped<INotificationService, NotificationService>();
+        builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+              ConnectionMultiplexer.Connect(builder.Configuration["Redis:ConnectionString"]!));
+        builder.Services.AddScoped<IPresenceService, PresenceService>();
+        builder.Services.AddScoped<ITypingService, TypingService>();
+        builder.Services.AddScoped<IMessageCacheService, MessageCacheService>();
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowAll", policy =>
@@ -77,6 +86,7 @@ public class Program
                     .AllowCredentials(); // Required for SignalR
             });
         });
+
 
         var app = builder.Build();
 

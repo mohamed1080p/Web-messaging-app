@@ -3,12 +3,14 @@ using MongoDB.Driver;
 using System.Security.Claims;
 using Web_messaging_app.Domain.Models.Messages;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
+using Web_messaging_app.Infrastructure.Redis.MessageCache;
 
 namespace Web_messaging_app.Featuers.Messaging.DeleteMessage;
 
 public class DeleteMessageCommandHandler(
     MongoDbContext _mongoDbContext,
-    IHttpContextAccessor _httpContextAccessor) : IRequestHandler<DeleteMessageCommand>
+    IHttpContextAccessor _httpContextAccessor,
+    IMessageCacheService _messageCache) : IRequestHandler<DeleteMessageCommand>
 {
     public async Task Handle(DeleteMessageCommand request, CancellationToken ct)
     {
@@ -37,5 +39,14 @@ public class DeleteMessageCommandHandler(
             m => m.Id == request.MessageId,
             update,
             cancellationToken: ct);
+
+        try
+        {
+            await _messageCache.RemoveMessageAsync(request.ConversationId, request.MessageId);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 }
