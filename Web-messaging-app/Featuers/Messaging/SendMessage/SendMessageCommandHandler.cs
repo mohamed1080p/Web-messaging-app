@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using DnsClient.Internal;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Web_messaging_app.Domain.Models.Messages;
 using Web_messaging_app.Featuers.Messaging.Notifications;
 using Web_messaging_app.Infrastructure.Persistence.MongoDb;
 using Web_messaging_app.Infrastructure.Persistence.PostgreSql;
+using Web_messaging_app.Infrastructure.Redis.MessageCache;
 
 namespace Web_messaging_app.Featuers.Messaging.SendMessage;
 
@@ -12,7 +14,9 @@ public class SendMessageCommandHandler
     (AppDbContext _dbContext,
     MongoDbContext _mongoDbContext,
     IHttpContextAccessor _httpContextAccessor,
-    INotificationService _notificationService) : IRequestHandler<SendMessageCommand, SendMessageResponse>
+    INotificationService _notificationService,
+    ILogger<SendMessageCommandHandler> _logger,
+    IMessageCacheService _messageCacheService) : IRequestHandler<SendMessageCommand, SendMessageResponse>
 {
     public async Task<SendMessageResponse> Handle(SendMessageCommand command, CancellationToken ct)
     {
@@ -41,6 +45,21 @@ public class SendMessageCommandHandler
         };
 
         await _mongoDbContext.Messages.InsertOneAsync(message, cancellationToken: ct);
+
+        try
+        {
+            await _messageCacheService.AddMessageAsync(command.ConversationId, new CachedMessage(
+                message.Id,
+                message.ConversationId,
+                message.SenderId,
+                message.Text,
+                message.IsDeleted,
+                message.CreatedAt));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, $"Redis cache write failed for message {message.Id}. MongoDB write succeeded.");
+        }
 
         // update conversation in PostgreSQL
         var conversation = await _dbContext.Conversations
