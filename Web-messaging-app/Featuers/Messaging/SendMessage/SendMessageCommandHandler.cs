@@ -15,7 +15,7 @@ public class SendMessageCommandHandler
     MongoDbContext _mongoDbContext,
     IHttpContextAccessor _httpContextAccessor,
     INotificationService _notificationService,
-    Microsoft.Extensions.Logging.ILogger _logger,
+    ILogger<SendMessageCommandHandler> _logger,
     IMessageCacheService _messageCacheService) : IRequestHandler<SendMessageCommand, SendMessageResponse>
 {
     public async Task<SendMessageResponse> Handle(SendMessageCommand command, CancellationToken ct)
