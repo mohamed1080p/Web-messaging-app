@@ -22,7 +22,7 @@
 
 ---
 
-##  About This Project
+## About This Project
 
 This isn't a CRUD tutorial app. It's a deliberately engineered messaging backend built to demonstrate **real architectural decision-making** — the kind a backend engineer makes when trading off consistency, latency, and scalability against each other, rather than reaching for whatever a framework defaults to.
 
@@ -39,36 +39,33 @@ Every one of those questions has a deliberate answer in this README — not just
 
 ## 📑 Table of Contents
 
-- [Highlights](#-highlights)
-- [Tech Stack](#-tech-stack)
-- [System Architecture](#%EF%B8%8F-system-architecture)
-- [Architecture Deep Dive](#-architecture-deep-dive)
-- [Database Schema](#%EF%B8%8F-database-schema-postgresql)
-- [Implemented Features](#-implemented-features)
-- [API Surface](#-api-surface)
+- [Highlights](#highlights)
+- [Tech Stack](#tech-stack)
+- [Architecture Deep Dive](#architecture-deep-dive)
+- [Database Schema](#database-schema-postgresql)
+- [API Surface](#api-surface)
 - [SignalR Events](#-signalr-events)
 - [Project Structure](#-project-structure)
 - [Getting Started](#-getting-started)
-- [Engineering Decisions & Lessons](#-key-engineering-decisions--lessons)
+- [Engineering Decisions & Lessons](#key-engineering-decisions--lessons)
 - [Roadmap](#-roadmap)
-- [Conventions](#-conventions)
 - [License](#-license)
 
 ---
 
-##  Highlights
+## Highlights
 
--  **Custom JWT authentication** — access + refresh token rotation, built from scratch (no ASP.NET Identity)
--  **Real-time messaging via SignalR** — on-demand group joining, not "join every conversation on connect"
--  **True polyglot persistence** — PostgreSQL, MongoDB, and Redis each doing the job they're best at
--  **Async media pipeline** — RabbitMQ-driven upload → thumbnail generation → notification, fully decoupled from the request/response cycle
--  **Live presence & typing indicators** — Redis-backed, crash-safe, sub-second latency
--  **Vertical Slice Architecture** — every feature is a self-contained folder: Command/Query, Handler, Endpoint
--  **Custom WebSocket test client** — purpose-built browser tool because Postman doesn't test SignalR well
+- **Custom JWT authentication** — access + refresh token rotation, built from scratch (no ASP.NET Identity)
+- **Real-time messaging via SignalR** — on-demand group joining, not "join every conversation on connect"
+- **True polyglot persistence** — PostgreSQL, MongoDB, and Redis each doing the job they're best at
+- **Async media pipeline** — RabbitMQ-driven upload → thumbnail generation → notification, fully decoupled from the request/response cycle
+- **Live presence & typing indicators** — Redis-backed, crash-safe, sub-second latency
+- **Vertical Slice Architecture** — every feature is a self-contained folder: Command/Query, Handler, Endpoint
+- **Custom WebSocket test client** — purpose-built browser tool because Postman doesn't test SignalR well
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
 ### Core Framework
 | Tool | Role |
@@ -95,9 +92,9 @@ Every one of those questions has a deliberate answer in this README — not just
 
 ---
 
-##  Architecture Deep Dive
+## Architecture Deep Dive
 
-###  Vertical Slice Architecture + CQRS
+### Vertical Slice Architecture + CQRS
 
 Instead of organizing code by technical layer (`Controllers/`, `Services/`, `Repositories/`), every feature lives in its own folder containing everything it needs to function independently:
 
@@ -116,7 +113,7 @@ Each slice is independently readable — opening one folder explains the entire 
 
 ---
 
-###  Polyglot Persistence — One Database, One Job Each
+### Polyglot Persistence — One Database, One Job Each
 
 | Store | Responsibility | Why This Store |
 |---|---|---|
@@ -126,7 +123,7 @@ Each slice is independently readable — opening one folder explains the entire 
 
 ---
 
-###  Message Flow — MongoDB as Source of Truth, Redis as Best-Effort
+### Message Flow — MongoDB as Source of Truth, Redis as Best-Effort
 
 Every message write lands in **MongoDB first** — the durable source of truth. Redis caching is **best-effort only**, wrapped in try/catch so a Redis outage never blocks or fails a message send.
 
@@ -162,7 +159,7 @@ This keeps the hot path — recent messages — fast, without ever making Redis 
 
 ---
 
-###  Real-Time Layer — SignalR with On-Demand Group Joining
+### Real-Time Layer — SignalR with On-Demand Group Joining
 
 Rather than loading every conversation a user belongs to into SignalR groups at connection time — which degrades as a user's conversation count grows — groups are joined **on demand**:
 
@@ -187,7 +184,7 @@ Rather than loading every conversation a user belongs to into SignalR groups at 
 
 ---
 
-###  Media Pipeline — Fully Asynchronous
+### Media Pipeline — Fully Asynchronous
 
 ```mermaid
 sequenceDiagram
@@ -215,7 +212,7 @@ This ensures large file uploads never tie up a request thread, and the API stays
 
 ---
 
-##  Database Schema (PostgreSQL)
+## Database Schema (PostgreSQL)
 
 Seven core tables, each configured via `IEntityTypeConfiguration<T>` under `Infrastructure/Persistence/PostgreSql/Configurations/`:
 
@@ -271,7 +268,7 @@ erDiagram
 
 ---
 
-##  API Surface
+## API Surface
 
 | Module | Endpoint Pattern | Method | Description |
 |---|---|---|---|
@@ -403,7 +400,7 @@ Add connection strings and secrets to `appsettings.Development.json` or user-sec
 
 ---
 
-##  Key Engineering Decisions & Lessons
+## Key Engineering Decisions & Lessons
 
 > **Why is MongoDB the source of truth, not Redis?**
 > Redis is fast but ephemeral and best-effort by design. Message durability can never depend on a cache — if Redis is down, messages still need to land safely.
